@@ -4,6 +4,7 @@ import range from "lodash/range"
 import Section from "./Section"
 import { setBoard, cleaning, uniqueRows, uniqueColumns, uniqueSections, toggleAutoCleaning } from "../redux/boardSlice"
 import { toggleHovering, toggleColoring, toggleEliminate } from "../redux/controlsSlice"
+import { ActionCreators } from 'redux-undo';
 import UndoRedo from "./UndoRedo"
 
 const emptyBoard = Array.apply(null, Array(81)).map(Number.prototype.valueOf, 0)
@@ -28,6 +29,7 @@ const setup = (board, order) => {
 const Puzzle = ({ order, width, setupBoard }) => {
   // this is local state for the component, used only once
   const [first, setFirst] = useState(true)
+  const [userCreatingBoard, setUserCreatingBoard] = useState(false)
 
   // this is redux managed state
   const board = useSelector(state => state.board.present.board)
@@ -82,8 +84,30 @@ const Puzzle = ({ order, width, setupBoard }) => {
   }
 
   const new3x3Click = () => {
-    let board = setup(emptyBoard, 3)
-    dispatch(setBoard(board))
+    if (userCreatingBoard) {
+      // done clicked
+      // all board items with just one possible should get given true
+      setUserCreatingBoard(false)
+      let newBoard = []
+      for (let i=0; i<81; i++){
+        if (board[i].possibles.length === 1){
+          newBoard.push({error: false, given:board[i].possibles[0], possibles: board[i].possibles})
+        }else{
+          newBoard.push({error: false, given:0, possibles: board[i].possibles})
+        }
+      }
+      dispatch(setBoard(newBoard))
+      // TODO: remove the undo history
+      dispatch(ActionCreators.clearHistory())
+    } else {
+      let board = setup(emptyBoard, 3)
+      setUserCreatingBoard(true)
+      // make sure a click creates a number and not removes a possible
+      if (eliminate) {
+        dispatch(toggleEliminate())
+      }
+      dispatch(setBoard(board))
+    }
   }
 
   let jsx = []
@@ -104,7 +128,7 @@ const Puzzle = ({ order, width, setupBoard }) => {
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", fontSize: "14px", marginTop: "11px" }}>
-        <button onClick={new3x3Click}>New 3x3</button>
+        <button onClick={new3x3Click}>{userCreatingBoard ? "Done" : "New 3x3"}</button>
         <button onClick={reduceCellsClick}>Clean</button>
         <button onClick={uniqueRowsClick}>Unique rows</button>
         <button onClick={uniqueColumnsClick}>Unique columns</button>
@@ -148,7 +172,7 @@ const Puzzle = ({ order, width, setupBoard }) => {
         }}
       >
         {jsx}
-        <div style={{ marginTop: "10px", fontSize:"14px" }}>
+        <div style={{ marginTop: "10px", fontSize: "14px" }}>
           <UndoRedo />
         </div>
       </div>

@@ -1,6 +1,5 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { resetCell } from "../redux/boardSlice"
 import { setHoverValue } from "../redux/controlsSlice"
 import {setColor} from "../utils/coloring"
 
@@ -15,10 +14,7 @@ const AnswerCell = ({ width, order, answer, given, index, error }) => {
     width: answerWidth + "px",
     height: answerWidth + "px",
     borderStyle: "solid",
-//    borderColor: hoverValue === answer ? "cyan" : "white",
     borderWidth: "1px",
-    // backgroundColor: hoverValue === answer ? "cyan" : coloring ? colors[answer - 1] : "green",
-    // color: (hoverValue === answer) ? "black" : (coloring) ? blackText[answer - 1] : "white",
     align: "center",
     verticalAlign: "middle",
     fontSize: answerWidth - 10 + "px",
@@ -31,7 +27,6 @@ const AnswerCell = ({ width, order, answer, given, index, error }) => {
   squareStyle.borderColor = borderColor
 
   if (given === answer) {
-    // squareStyle.backgroundColor = hoverValue === answer ? "cyan" : coloring ? colors[answer - 1] : "black"
     squareStyle.borderStyle = "dashed"
     squareStyle.fontWeight = 100
   }
@@ -46,14 +41,8 @@ const AnswerCell = ({ width, order, answer, given, index, error }) => {
     }
   }
 
-  const reset = () => {
-    if (given !== answer){
-      dispatch(resetCell({index:index, range:order*order}))
-    }
-  }
-
   return (
-    <div style={squareStyle} onClick={reset} onMouseOver={hover}>
+    <div style={squareStyle} onMouseOver={hover}>
       {answer}
     </div>
   )

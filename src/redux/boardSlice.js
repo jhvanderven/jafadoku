@@ -329,10 +329,6 @@ const boardSlice = createSlice({
         performClean(state.board)
       }
     },
-    resetCell: (state, action) => {
-      let possibles = range(1, 1 + action.payload.range)
-      state.board[action.payload.index].possibles = possibles
-    },
     cleaning: state => {
       performClean(state.board)
     },
