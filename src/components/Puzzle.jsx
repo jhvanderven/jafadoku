@@ -97,7 +97,7 @@ const Puzzle = ({ order, width, setupBoard }) => {
         }
       }
       dispatch(setBoard(newBoard))
-      // TODO: remove the undo history
+      // remove the undo history
       dispatch(ActionCreators.clearHistory())
     } else {
       let board = setup(emptyBoard, 3)
