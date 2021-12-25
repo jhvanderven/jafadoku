@@ -819,6 +819,25 @@ const fourByFourHard = [
   5
 ]
 
+const fourByFour2021 = [
+  0, 0, 10, 7, 0, 0, 16, 13, 5, 0, 14, 0, 3, 0, 0, 0,
+  13, 9, 0, 0, 7, 0, 0, 0, 15, 0, 0, 0, 8, 0, 0, 0,
+  14, 0, 3, 0, 0, 2, 12, 0, 0, 0, 8, 9, 10, 13, 0, 0,
+  11, 0, 0, 8, 9, 0, 0, 0, 0, 10, 12, 0, 0, 0, 0, 7,
+  0, 6, 0, 0, 4, 16, 5, 15, 8, 9, 0, 0, 0, 0, 12, 0,
+  16, 8, 0, 4, 0, 0, 1, 9, 14, 0, 0, 0, 0, 0, 0, 0,
+  0, 15, 0, 11, 13, 6, 0, 0, 0, 0, 3, 7, 0, 0, 0, 0,
+  7, 0, 5, 9, 0, 0, 3, 0, 13, 0, 0, 2, 4, 0, 0, 1,
+  9, 0, 0, 14, 10, 0, 0, 11, 0, 5, 0, 0, 16, 8, 0, 13,
+  0, 0, 0, 0, 3, 15, 0, 0, 0, 0, 13, 10, 11, 0, 4, 0,
+  0, 0, 0, 0, 0, 0, 0, 5, 6, 14, 0, 0, 1, 0, 15, 9,
+  0, 5, 0, 0, 0, 0, 4, 2, 16, 1, 11, 15, 0, 0, 3, 0,
+  12, 0, 0, 0, 0, 14, 13, 0, 0, 0, 0, 5, 6, 0, 0, 8,
+  0, 0, 9, 3, 15, 5, 0, 0, 0, 4, 1, 0, 0, 12, 0, 11,
+  0, 0, 0, 1, 0, 0, 0, 7, 0, 0, 0, 16, 0, 0, 10, 4,
+  0,0,0,6,0,8,0,16,11,15,0,0,13,1,0,0,
+]
+
 // I think that what you need in a certain reducer needs to be part of it.
 // alltough I see samples doing it different. Perhaps because of the toolkit?
 let rootReducer = combineReducers({
@@ -836,7 +855,7 @@ function App() {
       <div className="App">
         {/*} <button onClick={new4x4Click}>New 4x4</button> */}
         {/* <Puzzle width={750} order={3} setupBoard={jan3} /> */}
-        <Puzzle width={750} order={3} setupBoard={jan3a} />
+        <Puzzle width={750} order={4} setupBoard={fourByFour2021} />
       </div>
     </Provider>
   )
